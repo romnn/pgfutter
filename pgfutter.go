@@ -100,6 +100,10 @@ func main() {
 			EnvVars: []string{"DB_TABLE"},
 		},
 		&cli.BoolFlag{
+			Name:  "drop-table",
+			Usage: "Drop table before insert",
+		},
+		&cli.BoolFlag{
 			Name:  "jsonb",
 			Value: false,
 			Usage: "use JSONB data type",
@@ -184,6 +188,7 @@ func main() {
 				tableName := parseTableName(c, filename)
 
 				skipHeader := c.Bool("skip-header")
+				dropTable := c.Bool("drop-table")
 				fields := c.String("fields")
 				nullDelimiter := c.String("null-delimiter")
 				skipParseheader := c.Bool("skip-parse-delimiter")
@@ -192,7 +197,7 @@ func main() {
 				lineTerminator := c.String("line-terminator")
 				connStr := parseConnStr(c)
 
-				return importCSV(filename, connStr, schema, tableName, ignoreErrors, skipHeader, fields, delimiter, excel, nullDelimiter, lineTerminator)
+				return importCSV(filename, connStr, schema, tableName, ignoreErrors, skipHeader, fields, delimiter, excel, nullDelimiter, lineTerminator, dropTable)
 			},
 		},
 	}

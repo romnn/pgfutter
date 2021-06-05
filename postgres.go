@@ -116,3 +116,13 @@ func createTable(db *sql.DB, schema string, tableName string, columns []string) 
 	statement, err := db.Prepare(tableSchema)
 	return statement, err
 }
+
+func dropTable(db *sql.DB, schema string, tableName string) (*sql.Stmt, error) {
+	fmt.Printf("Dropping table %s\n", tableName)
+	fullyQualifiedTable := fmt.Sprintf("%s.%s", schema, tableName)
+	tableSchema := fmt.Sprintf("DROP TABLE IF EXISTS %s", fullyQualifiedTable)
+
+	statement, err := db.Prepare(tableSchema)
+
+	return statement, err
+}

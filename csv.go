@@ -127,7 +127,7 @@ func copyCSVRows(i *Import, reader *csv.Reader, ignoreErrors bool,
 }
 
 func importCSV(filename string, connStr string, schema string, tableName string, ignoreErrors bool,
-	skipHeader bool, fields string, delimiter string, excel bool, nullDelimiter string, lineTerminator string) error {
+	skipHeader bool, fields string, delimiter string, excel bool, nullDelimiter string, lineTerminator string, dropTable bool) error {
 
 	db, err := connect(connStr, schema)
 	if err != nil {
@@ -150,7 +150,7 @@ func importCSV(filename string, connStr string, schema string, tableName string,
 			dialect.LineTerminator = "\n"
 		}
 	}
-	
+
 	var reader *csv.Reader
 	var bar *pb.ProgressBar
 	if filename != "" {
@@ -173,7 +173,7 @@ func importCSV(filename string, connStr string, schema string, tableName string,
 		return err
 	}
 
-	i, err := NewCSVImport(db, schema, tableName, columns)
+	i, err := NewCSVImport(db, schema, tableName, columns, dropTable)
 	if err != nil {
 		fmt.Printf("Couldn't import to database\n")
 		return err

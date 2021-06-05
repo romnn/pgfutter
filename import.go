@@ -11,14 +11,25 @@ type Import struct {
 	stmt *sql.Stmt
 }
 
-func NewCSVImport(db *sql.DB, schema string, tableName string, columns []string) (*Import, error) {
+func NewCSVImport(db *sql.DB, schema string, tableName string, columns []string, drop bool) (*Import, error) {
+	if drop {
+		dropTableStatement, err := dropTable(db, schema, tableName)
+		if err != nil {
+			return nil, err
+		}
 
-	table, err := createTable(db, schema, tableName, columns)
+		_, err = dropTableStatement.Exec()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	createTableStatement, err := createTable(db, schema, tableName, columns)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = table.Exec()
+	_, err = createTableStatement.Exec()
 	if err != nil {
 		return nil, err
 	}
