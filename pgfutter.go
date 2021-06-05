@@ -52,29 +52,29 @@ func main() {
 	app.Usage = "Import JSON and CSV into PostgreSQL the easy way"
 	app.Flags = []cli.Flag{
 		&cli.StringFlag{
-			Name:   "dbname",
-			Aliases:[]string{"db"},
-			Value:  "postgres",
-			Usage:  "database to connect to",
+			Name:    "dbname",
+			Aliases: []string{"db"},
+			Value:   "postgres",
+			Usage:   "database to connect to",
 			EnvVars: []string{"DB_NAME"},
 		},
 		&cli.StringFlag{
-			Name:   "host",
-			Value:  "localhost",
-			Usage:  "host name",
+			Name:    "host",
+			Value:   "localhost",
+			Usage:   "host name",
 			EnvVars: []string{"DB_HOST"},
 		},
 		&cli.StringFlag{
-			Name:   "port",
-			Value:  "5432",
-			Usage:  "port",
+			Name:    "port",
+			Value:   "5432",
+			Usage:   "port",
 			EnvVars: []string{"DB_PORT"},
 		},
 		&cli.StringFlag{
-			Name:   "username",
-			Aliases:[]string{"user"},
-			Value:  "postgres",
-			Usage:  "username",
+			Name:    "username",
+			Aliases: []string{"user"},
+			Value:   "postgres",
+			Usage:   "username",
 			EnvVars: []string{"DB_USER"},
 		},
 		&cli.BoolFlag{
@@ -82,21 +82,21 @@ func main() {
 			Usage: "require ssl mode",
 		},
 		&cli.StringFlag{
-			Name:   "pass",
-			Aliases:[]string{"pw"},
-			Value:  "",
-			Usage:  "password",
+			Name:    "pass",
+			Aliases: []string{"pw"},
+			Value:   "",
+			Usage:   "password",
 			EnvVars: []string{"DB_PASS"},
 		},
 		&cli.StringFlag{
-			Name:   "schema",
-			Value:  "import",
-			Usage:  "database schema",
+			Name:    "schema",
+			Value:   "import",
+			Usage:   "database schema",
 			EnvVars: []string{"DB_SCHEMA"},
 		},
 		&cli.StringFlag{
-			Name:   "table",
-			Usage:  "destination table",
+			Name:    "table",
+			Usage:   "destination table",
 			EnvVars: []string{"DB_TABLE"},
 		},
 		&cli.BoolFlag{
@@ -121,7 +121,7 @@ func main() {
 				if err != nil {
 					return err
 				}
-				
+
 				ignoreErrors := c.Bool("ignore-errors")
 				schema := c.String("schema")
 				tableName := parseTableName(c, filename)
@@ -149,22 +149,22 @@ func main() {
 					Usage: "comma separated field names if no header row",
 				},
 				&cli.StringFlag{
-					Name:       "delimiter",
-					Aliases:    []string{"d"},
-					Value:      ",",
-					Usage:      "field delimiter",
+					Name:    "delimiter",
+					Aliases: []string{"d"},
+					Value:   ",",
+					Usage:   "field delimiter",
 				},
 				&cli.StringFlag{
-					Name:       "line-terminator",
-					Aliases:    []string{"lb", "line-break", "terminator"},
-					Value:      "",
-					Usage:      "line terminator (default is newline or carriage return for excel)",
+					Name:    "line-terminator",
+					Aliases: []string{"lb", "line-break", "terminator"},
+					Value:   "",
+					Usage:   "line terminator (default is newline or carriage return for excel)",
 				},
 				&cli.StringFlag{
-					Name:       "null-delimiter",
-					Aliases:    []string{"nd"},
-					Value:      "\\N",
-					Usage:      "null delimiter",
+					Name:    "null-delimiter",
+					Aliases: []string{"nd"},
+					Value:   "\\N",
+					Usage:   "null delimiter",
 				},
 				&cli.BoolFlag{
 					Name:  "skip-parse-delimiter",
@@ -198,8 +198,8 @@ func main() {
 	}
 
 	err := app.Run(os.Args)
-    if err != nil {
-        log.SetFlags(0)
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.SetFlags(0)
+		log.Fatal(err)
+	}
 }

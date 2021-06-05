@@ -1,6 +1,6 @@
 module github.com/lukasmartinelli/pgfutter
 
-go 1.14
+go 1.16
 
 require (
 	github.com/JensRantil/go-csv v0.0.0-20191126162552-aff1990e884a

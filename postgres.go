@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/urfave/cli/v2"
 	"github.com/kennygrant/sanitize"
+	"github.com/urfave/cli/v2"
 )
 
 //tries to create the schema and ignores failures to do so.

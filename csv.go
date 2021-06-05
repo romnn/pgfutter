@@ -97,8 +97,10 @@ func copyCSVRows(i *Import, reader *csv.Reader, ignoreErrors bool,
 
 		//Loop ensures we don't insert too many values and that
 		//values are properly converted into empty interfaces
-		for i, col := range record {
-			cols[i] = strings.Replace(col, "\x00", "", -1)
+		for index, col := range record {
+			if len(cols) >= index+1 {
+				cols[index] = strings.Replace(col, "\x00", "", -1)
+			}
 			// bytes.Trim(b, "\x00")
 			// cols[i] = col
 		}
@@ -129,6 +131,7 @@ func importCSV(filename string, connStr string, schema string, tableName string,
 
 	db, err := connect(connStr, schema)
 	if err != nil {
+		fmt.Printf("Couldn't read csv\n")
 		return err
 	}
 	defer db.Close()
@@ -153,6 +156,7 @@ func importCSV(filename string, connStr string, schema string, tableName string,
 	if filename != "" {
 		file, err := os.Open(filename)
 		if err != nil {
+			fmt.Printf("Couldn't open csv\n")
 			return err
 		}
 		defer file.Close()
@@ -165,11 +169,13 @@ func importCSV(filename string, connStr string, schema string, tableName string,
 
 	columns, err := parseColumns(reader, skipHeader, fields)
 	if err != nil {
+		fmt.Printf("Couldn't parse columns\n")
 		return err
 	}
 
 	i, err := NewCSVImport(db, schema, tableName, columns)
 	if err != nil {
+		fmt.Printf("Couldn't import to database\n")
 		return err
 	}
 
